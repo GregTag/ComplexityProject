@@ -7,7 +7,7 @@ SpanningTree::SpanningTree(const EdgeList& graph)
     BuildTree();
 }
 
-size_t SpanningTree::GetMaxDegree() {
+size_t SpanningTree::GetMaxDegree() const {
     return max_degree;
 }
 

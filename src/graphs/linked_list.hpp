@@ -1,5 +1,6 @@
 #pragma once
 
+#include <cstddef>
 #include <set>
 #include <vector>
 
@@ -11,6 +12,7 @@ class LinkedList {
 
     void AddEdge(size_t, size_t);
     void RemoveEdge(size_t, size_t);
+    bool CheckEdge(size_t, size_t) const;
 
     size_t GetSize() const;
 

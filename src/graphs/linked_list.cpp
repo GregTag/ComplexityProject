@@ -12,6 +12,10 @@ void LinkedList::RemoveEdge(size_t u, size_t v) {
     graph[v].erase(u);
 }
 
+bool LinkedList::CheckEdge(size_t u, size_t v) const {
+    return graph[u].contains(v);
+}
+
 size_t LinkedList::GetSize() const {
     return graph.size();
 }

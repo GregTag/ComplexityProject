@@ -11,7 +11,7 @@ class SpanningTree : public LinkedList {
     explicit SpanningTree(const EdgeList&);
 
     void ApproximateMinimumDegree();
-    size_t GetMaxDegree();
+    size_t GetMaxDegree() const;
 
    private:
     void BuildTree();
