@@ -6,12 +6,13 @@ set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY bin)
 
 if (CMAKE_BUILD_TYPE STREQUAL "Debug")
-    add_compile_options(-O0 -g -fno-omit-frame-pointer -fsanitize=address,undefined)
-    add_link_options(-O0 -g -fno-omit-frame-pointer -fsanitize=address,undefined)
+    set(FLAGS -O0 -g -fno-omit-frame-pointer -fsanitize=address,undefined)
 else()
-    add_compile_options(-O2)
-    add_link_options(-O2)
+    set(FLAGS -O2)
 endif()
+
+add_compile_options(${FLAGS})
+add_link_options(${FLAGS})
 
 include(FetchContent)
 
