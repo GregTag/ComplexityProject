@@ -3,6 +3,8 @@
 #include <ortools/sat/cp_model.h>
 #include <ortools/sat/cp_model.pb.h>
 #include <ortools/sat/cp_model_solver.h>
+#include <ortools/sat/model.h>
+#include <ortools/sat/sat_parameters.pb.h>
 #include <ortools/util/sorted_interval_list.h>
 
 #include <span>
@@ -40,7 +42,10 @@ CpSolverStatus TryToFindConstraintSpanningTree(const EdgeList& graph, size_t k) 
         cp_model.AddAtMostOne(edge2);
     }
 
-    const CpSolverResponse response = Solve(cp_model.Build());
+    SatParameters parameters;
+    parameters.set_max_time_in_seconds(10.0);
+
+    const CpSolverResponse response = SolveWithParameters(cp_model.Build(), parameters);
     return response.status();
 }
 
