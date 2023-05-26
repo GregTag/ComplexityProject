@@ -4,9 +4,7 @@
 
 #include "tests/checks/united_check.hpp"
 
-// Uncomment this block for a test with user input
-/*
-TEST(SimpleTests, Interactive) {
+TEST(DISABLED_SimpleTests, Interactive) {
     size_t n, m;
     std::cin >> n >> m;
     EdgeList graph(n);
@@ -17,7 +15,6 @@ TEST(SimpleTests, Interactive) {
     }
     UnitedCheck(graph);
 }
-*/
 
 class CompleteGraph : public ::testing::TestWithParam<int> {
    protected:
@@ -38,5 +35,5 @@ TEST_P(CompleteGraph, Check) {
     UnitedCheck(*graph);
 }
 
-INSTANTIATE_TEST_SUITE_P(UpTo100, CompleteGraph, ::testing::Range(2, 100),
+INSTANTIATE_TEST_SUITE_P(SimpleTests, CompleteGraph, ::testing::Range(2, 100),
                          ::testing::PrintToStringParamName());
