@@ -24,6 +24,13 @@ FetchContent_Declare(
 FetchContent_MakeAvailable(googletest)
 
 FetchContent_Declare(
+    benchmark
+    GIT_REPOSITORY https://github.com/google/benchmark.git
+    GIT_TAG main
+)
+FetchContent_MakeAvailable(benchmark)
+
+FetchContent_Declare(
    ortools
    URL https://github.com/google/or-tools/releases/download/v9.6/or-tools_amd64_ubuntu-22.04_cpp_v9.6.2534.tar.gz
    DOWNLOAD_EXTRACT_TIMESTAMP true
@@ -36,8 +43,13 @@ include_directories(.)
 
 file(GLOB_RECURSE SOURCES src/*.cpp)
 file(GLOB_RECURSE TESTS tests/*.cpp)
+file(GLOB_RECURSE BENCHMARK benchmark/*.cpp)
 
 add_executable(spanning_tree main.cpp ${SOURCES})
+
 add_executable(test ${TESTS} ${SOURCES})
 target_link_libraries(test gtest_main gtest ortools::ortools)
 target_compile_definitions(test PRIVATE DATA_PREFIX="${CMAKE_CURRENT_SOURCE_DIR}/data")
+
+add_executable(perfomance ${BENCHMARK} ${SOURCES})
+target_link_libraries(perfomance benchmark_main benchmark)
