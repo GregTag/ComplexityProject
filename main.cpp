@@ -3,26 +3,26 @@
 #include "src/spanning_tree.hpp"
 
 void PrintGraph(const LinkedList& graph) {
-    std::vector<bool> visited(graph.GetSize(), false);
-    std::string spaces = "";
+    std::vector<size_t> stack;
+    std::cout << graph.GetSize() << " " << graph.GetSize() - 1 << "\n";
     graph.DepthFirstSearch(
             0,
-            [&visited, &spaces](size_t x) {
-                spaces.push_back(' ');
-                spaces.push_back(' ');
-                if (visited[x]) {
+            [&stack](size_t x) {
+                if (stack.size() >= 2 && x == stack[stack.size() - 2]) {
                     return false;
                 }
-                std::cout << "\n" << spaces << "└─" << x;
-                visited[x] = true;
+                if (stack.size() > 0) {
+                    std::cout << stack.back() << " " << x << "\n";
+                }
+                stack.push_back(x);
                 return true;
             },
-            [&spaces](size_t) {
-                spaces.pop_back();
-                spaces.pop_back();
+            [&stack](size_t x) {
+                if (x == stack.back()) {
+                    stack.pop_back();
+                }
                 return true;
             });
-    std::cout << "\n";
 }
 
 int main() {
@@ -35,7 +35,6 @@ int main() {
         graph.AddEdge(u, v);
     }
     SpanningTree tree(graph);
-    PrintGraph(tree);
     tree.ApproximateMinimumDegree();
     PrintGraph(tree);
     std::cout << "Approximated minimum degree " << tree.GetMaxDegree() << "\n";

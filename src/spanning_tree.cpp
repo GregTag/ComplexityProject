@@ -89,7 +89,7 @@ void SpanningTree::Propagate(size_t x) {
     improvements_to[x] = kEmpty;
 }
 
-bool SpanningTree::DoPhase(size_t u, size_t v) {
+bool SpanningTree::TryToImprove(size_t u, size_t v) {
     auto cycle = FindCycle(u, v);
 
     // processing k degree
@@ -99,7 +99,7 @@ bool SpanningTree::DoPhase(size_t u, size_t v) {
             improvements_from[x] = cycle[i + (i + 1 < cycle.size() ? 1 : -1)];
             improvements_to[x] = {u, v};
             Propagate(x);
-            return false;
+            return true;
         }
     }
 
@@ -116,7 +116,7 @@ bool SpanningTree::DoPhase(size_t u, size_t v) {
             dsu.Unite(x, v);
         }
     }
-    return true;
+    return false;
 }
 
 void SpanningTree::ApproximateMinimumDegree() {
@@ -128,7 +128,7 @@ void SpanningTree::ApproximateMinimumDegree() {
             if (!u && !v) {
                 return;
             }
-            if (!DoPhase(u, v)) {
+            if (TryToImprove(u, v)) {
                 break;
             }
         };

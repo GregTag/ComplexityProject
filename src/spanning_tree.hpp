@@ -20,7 +20,7 @@ class SpanningTree : public LinkedList {
     std::vector<size_t> FindCycle(size_t, size_t);
     void DivideIntoComponents();
     void Propagate(size_t);
-    bool DoPhase(size_t, size_t);
+    bool TryToImprove(size_t, size_t);
 
    private:
     const EdgeList& original;
