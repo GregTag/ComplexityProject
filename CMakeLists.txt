@@ -47,6 +47,8 @@ file(GLOB_RECURSE BENCHMARK benchmark/*.cpp)
 
 add_executable(spanning_tree main.cpp ${SOURCES})
 
+add_executable(workloads workloads.cpp ${SOURCES})
+
 add_executable(test ${TESTS} ${SOURCES})
 target_link_libraries(test gtest_main gtest ortools::ortools)
 target_compile_definitions(test PRIVATE DATA_PREFIX="${CMAKE_CURRENT_SOURCE_DIR}/data")

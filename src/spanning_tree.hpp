@@ -16,7 +16,6 @@ class SpanningTree : public LinkedList {
    private:
     void BuildTree();
     void InitPhase();
-    Edge FindEdge();
     std::vector<size_t> FindCycle(size_t, size_t);
     void DivideIntoComponents();
     void Propagate(size_t);
@@ -25,7 +24,7 @@ class SpanningTree : public LinkedList {
    private:
     const EdgeList& original;
     DisjointSetUnion dsu;
-    std::vector<bool> marks;
+    std::vector<int> marks;
     std::vector<size_t> improvements_from;
     std::vector<Edge> improvements_to;
     size_t max_degree{0};

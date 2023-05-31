@@ -48,15 +48,6 @@ void SpanningTree::DivideIntoComponents() {
     }
 }
 
-SpanningTree::Edge SpanningTree::FindEdge() {
-    for (auto [u, v] : original.GetEdges()) {
-        if (marks[u] && marks[v] && !dsu.InSameSet(u, v)) {
-            return {u, v};
-        }
-    }
-    return kEmpty;
-}
-
 std::vector<size_t> SpanningTree::FindCycle(size_t s, size_t t) {
     std::vector<size_t> stack;
     DepthFirstSearch(
@@ -123,14 +114,21 @@ void SpanningTree::ApproximateMinimumDegree() {
     while (true) {
         InitPhase();
         DivideIntoComponents();
-        while (true) {
-            auto [u, v] = FindEdge();
-            if (!u && !v) {
+
+        bool has_improved = false;
+        while (!has_improved) {
+            bool found_edge = false;
+            for (auto [u, v] : original.GetEdges()) {
+                if (marks[u] && marks[v] && !dsu.InSameSet(u, v)) {
+                    found_edge = true;
+                    if ((has_improved = TryToImprove(u, v))) {
+                        break;
+                    }
+                }
+            }
+            if (!found_edge) {
                 return;
             }
-            if (TryToImprove(u, v)) {
-                break;
-            }
-        };
+        }
     }
 }
