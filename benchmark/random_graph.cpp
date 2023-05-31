@@ -4,10 +4,10 @@
 
 #include "src/spanning_tree.hpp"
 
-static void BM_RandomGraph(benchmark::State& state) {
+static void BM_RandomGraph(benchmark::State& state, double prob) {
     std::random_device rd;
     std::mt19937 gen{rd()};
-    std::bernoulli_distribution coin(state.range(1) / 100.0);
+    std::bernoulli_distribution coin(prob);
 
     size_t size = state.range(0);
     size_t components;
@@ -47,7 +47,20 @@ static void BM_RandomGraph(benchmark::State& state) {
     }
 }
 
-BENCHMARK(BM_RandomGraph)
+void BM_Constant(benchmark::State& state) {
+    BM_RandomGraph(state, state.range(1) * 0.01);
+}
+
+void BM_Linear(benchmark::State& state) {
+    BM_RandomGraph(state, state.range(1) * 0.01 / state.range(0));
+}
+
+BENCHMARK(BM_Constant)
         ->ArgsProduct({benchmark::CreateRange(2, 256, 2), benchmark::CreateDenseRange(10, 90, 10)})
+        ->Threads(8)
+        ->Repetitions(10);
+
+BENCHMARK(BM_Linear)
+        ->ArgsProduct({benchmark::CreateRange(2, 256, 2), benchmark::CreateDenseRange(50, 190, 10)})
         ->Threads(8)
         ->Repetitions(10);

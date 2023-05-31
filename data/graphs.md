@@ -1,5 +1,5 @@
 # Graphs
-The following graph-sets from [here](https://users.cecs.anu.edu.au/~bdm/data/graphs.html) must be placed in this directory
+Следующие наборы графов [отсюда](https://users.cecs.anu.edu.au/~bdm/data/graphs.html) должны быть помещены здесь.
 
 * ge8c.g6
 * ge9c.g6
