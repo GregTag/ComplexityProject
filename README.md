@@ -62,4 +62,4 @@ $ STATISTICS=1 ./test --gtest_output=json
 * Для проверки корректности и оптимальности решения используется $\sf{CP}$-solver из библиотеки [OR-Tools](https://developers.google.com/optimization)
 * Для оценки производительности получившегося алгоритма используется фреймворк [benchmark](https://github.com/google/benchmark)
 * Для создания тестов используются наборы графов с [cecs.anu.edu.au](https://users.cecs.anu.edu.au/~bdm/data/graphs.html), которые необходимо поместить в папку `data` до запуска тестов. Какие именно наборы используются можно узнать [здесь](data/graphs.md).
-* Для чтения наборов графов в форматах graph6, sparse6 и digraph6 используется изменённая программа [showg.c](https://users.cecs.anu.edu.au/~bdm/data/showg.c) 
+* Для чтения наборов графов в форматах `graph6`, `sparse6` и `digraph6` используется изменённая программа [showg.c](https://users.cecs.anu.edu.au/~bdm/data/showg.c) 
