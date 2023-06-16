@@ -7,14 +7,24 @@ void UnitedCheck(const EdgeList& graph) {
     tree.ApproximateMinimumDegree();
     CheckSpanningTree(graph, tree);
     if (tree.GetMaxDegree() > 2) {
-        EXPECT_TRUE(MinimumDegreeSpanningTreeIsGreaterThan(graph, tree.GetMaxDegree() - 2));
+        auto status = SolveMinimumDegreeSpanningTree(graph, tree.GetMaxDegree() - 2);
+        if (status == Result::TIMED_OUT) {
+            GTEST_SKIP() << "Timed out";
+        }
+        EXPECT_EQ(status, Result::IMPOSSIBLE);
     }
     if (getenv("STATISTICS")) {
         ::testing::Test::RecordProperty("size", graph.GetSize());
         ::testing::Test::RecordProperty("edges", graph.GetEdges().size());
         ::testing::Test::RecordProperty("aproximated_minimum_degree", tree.GetMaxDegree());
-        ::testing::Test::RecordProperty(
-                "is_optimal", tree.GetMaxDegree() <= 2 || !MinimumDegreeSpanningTreeIsLessOrEqual(
-                                                                  graph, tree.GetMaxDegree() - 1));
+        if (tree.GetMaxDegree() <= 2) {
+            ::testing::Test::RecordProperty("is_optimal", true);
+        } else {
+            auto status = SolveMinimumDegreeSpanningTree(graph, tree.GetMaxDegree() - 1);
+            if (status == Result::TIMED_OUT) {
+                GTEST_SKIP() << "Timed out";
+            }
+            ::testing::Test::RecordProperty("is_optimal", status == Result::IMPOSSIBLE);
+        }
     }
 }

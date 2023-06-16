@@ -53,12 +53,17 @@ CpSolverStatus TryToFindConstraintSpanningTree(const EdgeList& graph, size_t k) 
 
 using operations_research::sat::CpSolverStatus;
 
-bool MinimumDegreeSpanningTreeIsGreaterThan(const EdgeList& graph, size_t k) {
-    return operations_research::sat::TryToFindConstraintSpanningTree(graph, k) ==
-           CpSolverStatus::INFEASIBLE;
-}
-
-bool MinimumDegreeSpanningTreeIsLessOrEqual(const EdgeList& graph, size_t k) {
+Result SolveMinimumDegreeSpanningTree(const EdgeList& graph, size_t k) {
     auto status = operations_research::sat::TryToFindConstraintSpanningTree(graph, k);
-    return status == CpSolverStatus::OPTIMAL || status == CpSolverStatus::FEASIBLE;
+    switch (status) {
+        case CpSolverStatus::INFEASIBLE:
+            return Result::IMPOSSIBLE;
+
+        case CpSolverStatus::OPTIMAL:
+        case CpSolverStatus::FEASIBLE:
+            return Result::FOUND;
+
+        default:
+            return Result::TIMED_OUT;
+    }
 }

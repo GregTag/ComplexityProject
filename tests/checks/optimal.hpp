@@ -2,6 +2,6 @@
 
 #include "src/graphs/edge_list.hpp"
 
-bool MinimumDegreeSpanningTreeIsGreaterThan(const EdgeList&, size_t);
+enum class Result { FOUND, IMPOSSIBLE, TIMED_OUT };
 
-bool MinimumDegreeSpanningTreeIsLessOrEqual(const EdgeList&, size_t);
+Result SolveMinimumDegreeSpanningTree(const EdgeList&, size_t);
